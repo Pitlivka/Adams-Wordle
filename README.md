@@ -5,5 +5,5 @@ Still working progress but mainly 90% finished.
 
 The readme file contect is in progress!
 
-The main code for the game will be also updated to use aan alternative 
+The main code for the game will be also updated to use an alternative 
 To module RandomWord due to rare unexpected crashes .
