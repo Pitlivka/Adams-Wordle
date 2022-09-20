@@ -31,7 +31,7 @@ class AdamsWordle:
         self.round = 0
         self.deltaround = 0
         self.count = 0
-        self.randomWord = self.randomWordGenerating()
+        self.randomWord = self.random_word_generating()
         self.exp = ""
         self.c = 0
         self.g = []
@@ -198,12 +198,12 @@ class AdamsWordle:
 
         # Button to check if the word is correct:
 
-        self.check = Button(self.window, text='CHECK !', borderwidth=3, relief="solid", command=self.addTheWords)
+        self.check = Button(self.window, text='CHECK !', borderwidth=3, relief="solid", command=self.add_the_words)
         self.check.place(x=30, y=600, width=150, height=40)
 
         #  Button to start new game at any point of the game:
 
-        self.new_try = Button(self.window, text='New Try', borderwidth=3, relief="solid", command=self.newGame)
+        self.new_try = Button(self.window, text='New Try', borderwidth=3, relief="solid", command=self.new_game)
         self.new_try.place(x=220, y=600, width=150, height=40)
 
         # Function enabling all the physical keys:
@@ -247,7 +247,7 @@ class AdamsWordle:
 
 
 
-    def addTheWords(self):
+    def add_the_words(self):
         """
         Function which is called everytime the check button is pressed.
         Function first checks if the randomly generated word is actually from en_UK dictionary
@@ -261,12 +261,12 @@ class AdamsWordle:
         for c in self.var:
             self.string_name += c
         while self.d.check(self.randomWord) is False:
-            self.randomWordGenerating()
-            self.addTheWords()
+            self.random_word_generating()
+            self.add_the_words()
 
         if len(self.string_name) == self.max_len and self.d.check(self.string_name) is True:
             self.win(self.string_name)
-            self.countTimes()
+            self.count_times()
 
         if self.d.check(self.string_name) is False:
             self.initiate_inf_label("initiate")
@@ -298,15 +298,15 @@ class AdamsWordle:
         if self.randomWord != word:
             self.wor.clear()
             for key, letter in self.letters.items():
-                self.window.bind(str(letter), lambda event, digit=key: self.combineletters(digit))
+                self.window.bind(str(letter), lambda event, digit=key: self.combine_letters(digit))
             self.word_check(word, self.randomWord)
-            self.clearword()
-            self.clearentries()
-            self.machinecounter()
+            self.clear_word()
+            self.clear_entries()
+            self.machine_counter()
             self.infLabel.config(text='Not quite', bg="#D21E1E")
 
         if self.round == 5:
-            self.gameLost()
+            self.game_lost()
 
 
 
@@ -326,13 +326,13 @@ class AdamsWordle:
 
             for i in range(n):
                 if item1 == item2:
-                    self.changeColour(item1, "green")
+                    self.change_colour(item1, "green")
                     self.forbidden.insert(i, item1)
                     self.boxer(self.count, item1, "green")
                     self.count = self.count + 1
 
                 elif item1 in random and item1 not in self.forbidden:
-                    self.changeColour(item1, "orange")
+                    self.change_colour(item1, "orange")
                     self.boxer(self.count, item1, "orange")
                     self.count = self.count + 1
 
@@ -341,12 +341,12 @@ class AdamsWordle:
                     self.count = self.count + 1
 
                 elif item1 not in random:
-                    self.changeColour(item1, "gray")
+                    self.change_colour(item1, "gray")
                     self.boxer(self.count, item1, "gray")
                     self.count = self.count + 1
-        self.clearCounts()
+        self.clear_counts()
 
-    def newGame(self):
+    def new_game(self):
         """
         Function initates new game by rebinding the keyboard keys , clearing all variables and generating new guess word.
         """
@@ -355,17 +355,17 @@ class AdamsWordle:
         self.bind_keys()
 
         self.clean_key()
-        self.clearTimes()
-        self.cleardeltarounds()
+        self.clear_times()
+        self.clear_delta_rounds()
         self.clear_boxes()
         self.c = 0
-        self.clearword()
-        self.clearentries()
+        self.clear_word()
+        self.clear_entries()
         self.wor.clear()
         self.var.clear()
-        self.randomWord = self.randomWordGenerating()
+        self.randomWord = self.random_word_generating()
 
-    def randomWordGenerating(self):
+    def random_word_generating(self):
         """
         Function which generates new random word from imported python module random_words()
         It also makes sure that the variable is not initiated as none to avoid error.
@@ -392,7 +392,7 @@ class AdamsWordle:
         elif argument == "destroy" and self.deltaround >= 0:
             self.infLabel.after(1000, self.infLabel.destroy())
 
-    def changeColour(self, widget, colr):
+    def change_colour(self, widget, colr):
         """
         Function whic changes the color of the GUI keys based on the results of checks between the entered word and
         randomly generated word.
@@ -414,20 +414,20 @@ class AdamsWordle:
         if colr == "gray":
             self.buttons[widget].config(bg='gray', fg='black')
 
-    def countTimes(self):
+    def count_times(self):
         """
         Simple function counting rounds.
         """
 
         self.round = self.round + 1
 
-    def machinecounter(self):
+    def machine_counter(self):
         """
         Function which adds counts for the deltaround variable.
         """
         self.deltaround = self.deltaround + 1
 
-    def cellcounttimes(self, command):
+    def cell_count_times(self, command):
         """
         Function which either adds or subtracts from c variable which is used to know to what label box should the
         letter be entered in.
@@ -439,33 +439,33 @@ class AdamsWordle:
         else:
             self.c = 0
 
-    def clearentries(self):
+    def clear_entries(self):
         """
         Function resetting the c variable to zero.
         """
 
         self.c = 0
 
-    def clearTimes(self):
+    def clear_times(self):
         """
         Function resetting the round variable to zero.
         """
 
         self.round = 0
 
-    def cleardeltarounds(self):
+    def clear_delta_rounds(self):
         """
         Function resetting the deltaround variable to zero.
         """
         self.deltaround = 0
 
-    def clearCounts(self):
+    def clear_counts(self):
         """
         Function reseting the count variable to zero.
         """
         self.count = 0
 
-    def clearword(self):
+    def clear_word(self):
         """
         Function resetting the var variable to empty.
         """
@@ -484,13 +484,13 @@ class AdamsWordle:
         variables so the game works as intended.
         """
         if self.c >= 0:
-            self.cellcounttimes("minus")
-            self.deltaboxes(self.c, " ")
-            self.cellcounttimes("minus")
+            self.cell_count_times("minus")
+            self.delta_boxes(self.c, " ")
+            self.cell_count_times("minus")
             self.wor = self.wor[:-1]
             self.var = self.var[:-1]
             for key, letter in self.letters.items():
-                self.window.bind(str(letter), lambda event, digit=key: self.combineletters(digit))
+                self.window.bind(str(letter), lambda event, digit=key: self.combine_letters(digit))
 
     def bind_keys(self):
         """
@@ -503,11 +503,11 @@ class AdamsWordle:
             , "D": "d", "F": "f", "G": "g", "H": "h", "J": "j", "K": "k", "L": "l", "Z": "z", "X": "x", "C": "c",
                         "V": "v", "B": "b"
             , "N": "n", "M": "m"}
-        self.window.bind("<Return>", lambda event: self.addTheWords())
+        self.window.bind("<Return>", lambda event: self.add_the_words())
         self.window.bind("<BackSpace>", lambda event: self.do_backspace())
 
         for key, letter in self.letters.items():
-            self.window.bind(str(letter), lambda event, digit=key: self.combineletters(digit))
+            self.window.bind(str(letter), lambda event, digit=key: self.combine_letters(digit))
 
     #  Function which enables press of the qwerty keys to be added to the word string.
     def press(self, num):
@@ -515,17 +515,17 @@ class AdamsWordle:
         Function which enables press of the qwerty keys to be added to the word string..
         """
         self.exp = str(num)
-        self.deltaboxes(self.c, self.exp)
+        self.delta_boxes(self.c, self.exp)
         self.var.append(self.exp)
 
 
-    def combineletters(self, word):
+    def combine_letters(self, word):
         """
         Function which is called everytime any of the qwerty keys is pressed on psychical keyboard and then adds the key
         to the variable with 5 letters which is then tested against the actual random word generated.
         """
         if len(self.wor) < 5:
-            self.deltaboxes(self.c, word)
+            self.delta_boxes(self.c, word)
             self.wor.append(word)
             self.var.append(word)
         if len(self.wor) == 5:
@@ -612,11 +612,11 @@ class AdamsWordle:
                 self.textTest55.config(text=letter, bg=colour)
             if self.round == 5:
                 self.textTest65.config(text=letter, bg=colour)
-                self.gameLost()
+                self.game_lost()
 
 
 
-    def deltaboxes(self, item, letter):
+    def delta_boxes(self, item, letter):
         """
         Similar function to boxer() function but this one is only concerned with entries before every check is made.
         """
@@ -625,105 +625,105 @@ class AdamsWordle:
 
             if self.deltaround == 0:
                 self.textTest11.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 1:
                 self.textTest21.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 2:
                 self.textTest31.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 3:
                 self.textTest41.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 4:
                 self.textTest51.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 5:
                 self.textTest61.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
 
         if item == 1:
             if self.deltaround == 0:
                 self.textTest12.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 1:
                 self.textTest22.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 2:
                 self.textTest32.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 3:
                 self.textTest42.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 4:
                 self.textTest52.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 5:
                 self.textTest62.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
 
         if item == 2:
             if self.deltaround == 0:
                 self.textTest13.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 1:
                 self.textTest23.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 2:
                 self.textTest33.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 3:
                 self.textTest43.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 4:
                 self.textTest53.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 5:
                 self.textTest63.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
 
         if item == 3:
             if self.deltaround == 0:
                 self.textTest14.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 1:
                 self.textTest24.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 2:
                 self.textTest34.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 3:
                 self.textTest44.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 4:
                 self.textTest54.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 5:
                 self.textTest64.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
 
         if item == 4:
 
             if self.deltaround == 0:
                 self.textTest15.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 1:
                 self.textTest25.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 2:
                 self.textTest35.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 3:
                 self.textTest45.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 4:
                 self.textTest55.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
             if self.deltaround == 5:
                 self.textTest65.config(text=letter)
-                self.cellcounttimes("plus")
+                self.cell_count_times("plus")
 
-    def gameLost(self):
+    def game_lost(self):
         """
         Function which is initiated after the games finishes their 6th go.
         It informs of the word and then resets the game .
