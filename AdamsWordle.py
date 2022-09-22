@@ -1,11 +1,12 @@
 import enchant
 import enchant.checker
+import random
 
 import tkinter as tk
 import tkinter as ttk
 from tkinter import *
 
-from random_word import RandomWords
+
 
 LARGE_FONT_STYLE = ("Times", 20, "bold")
 DEFAULT_FONT_STYLE = ("Times", 25, "bold")
@@ -260,15 +261,12 @@ class AdamsWordle:
 
         for c in self.var:
             self.string_name += c
-        while self.d.check(self.randomWord) is False:
-            self.random_word_generating()
-            self.add_the_words()
 
         if len(self.string_name) == self.max_len and self.d.check(self.string_name) is True:
             self.win(self.string_name)
             self.count_times()
 
-        if self.d.check(self.string_name) is False:
+        if self.c != 0 and self.d.check(self.string_name) is False:
             self.initiate_inf_label("initiate")
             self.infLabel.config(text='Not a word', bg="#D21E1E")
 
@@ -365,11 +363,9 @@ class AdamsWordle:
         self.var.clear()
         self.randomWord = self.random_word_generating()
 
-    def random_word_generating(self):
-        """
-        Function which generates new random word from imported python module random_words()
-        It also makes sure that the variable is not initiated as none to avoid error.
-        """
+    """
+    def randomWordGenerating(self):
+
         self.r = RandomWords()
         true_word = self.r.get_random_word(hasDictionaryDef="true", includePartOfSpeech="noun,verb,adjective",
                                            minDictionaryCount=3, minLength=5, maxLength=5)
@@ -379,7 +375,19 @@ class AdamsWordle:
                                                minDictionaryCount=3, minLength=5, maxLength=5).upper()
         else:
             return true_word.upper()
+            """
 
+
+    def random_word_generating(self):
+        """
+        Function which generates new random word from imported python module random_words()
+        It also makes sure that the variable is not initiated as none to avoid error.
+        """
+        with open(r"C:\AdamsWordle\Wordle\wordle_words.txt", "r") as file:
+            allText = file.read()
+            words = list(map(str, allText.split()))
+            self.randomWord = (random.choice(words)).upper()
+            return self.randomWord
     def initiate_inf_label(self, argument):
         """
         Function which initiates information banner label whitch always appears after the check button is being pressed.
@@ -409,7 +417,7 @@ class AdamsWordle:
             self.g.append(widget)
 
         if colr == "orange":
-            self.buttons[widget].config(bg='yellow', fg='black')
+            self.buttons[widget].config(bg='orange', fg='black')
 
         if colr == "gray":
             self.buttons[widget].config(bg='gray', fg='black')
